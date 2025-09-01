@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Form</title>
+
+  <link rel="stylesheet" href="/loging/loginn.css">
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+ 
+  <meta http-equiv="Cache-Control" content="post-check=0, pre-check=0"> <meta http-equiv="Pragma" content="no-cache">
+  
+  <style>
+    .error {
+        color: red;
+        margin-top: 5px;
+    }
+
+    .error-border {
+        border: 2px solid red;
+    }
+</style>
+  </head>
+
+<body>
+  <div class="wrapper">
+    <form action="/login" method="post">
+      <h2>Login</h2>
+      <div class="input-field">
+        <input type="text" name="username" 
+               th:classappend="${error != null && error == 'Username does not exist'} ? 'error-border' : ''"
+               required>
+        <label>Username</label>
+        <div class="error" th:if="${error != null && error == 'Username does not exist'}" th:text="${error}"></div>
+    </div>
+    
+    <div class="input-field">
+        <input type="password" id="password" name="password"
+               th:classappend="${error != null && error == 'Incorrect password'} ? 'error-border' : ''"
+               required>
+        <label for="password">Password</label>
+        <span class="eye" onclick="myFunction()">
+         <i id="hide1" class="far fa-eye"></i>
+         <i id="hide2" class="fas fa-eye-slash"></i>
+       </span>
+     <div class="error" th:if="${error != null && error == 'Incorrect password'}" th:text="${error}"></div>
+    </div>
+    <br>
+      <div class="forget">
+        <a href="/src/main/resources/static/registration/registration.html">Forgot Password</a><br>
+        <a href="/registration/registration.html">Add New Account</a>
+
+      </div>
+     
+      <br>
+      <button type="submit">Log In</button>
+   <br>
+
+   
+   
+    </form>
+  </div>
+
+ 
+  <script>
+    window.addEventListener('resize', function() {
+});
+   function myFunction() {
+     const x = document.getElementById("password");
+     const y = document.getElementById("hide1");
+     const z = document.getElementById("hide2");
+
+     if (x.type === "password") {
+       x.type = "text";
+       y.style.display = "block";
+       z.style.display = "none";
+     } else {
+       x.type = "password";
+       y.style.display = "none";
+       z.style.display = "block";
+     }
+   }
+
+   // Toggle mobile menu
+   function toggleMenu() {
+     const menu = document.querySelector(".menu");
+     menu.classList.toggle("active");
+   }
+ </script>
+ <script src="https://kit.fontawesome.com/41baba5a65.js" crossorigin="anonymous"></script>
+
+
+</body>
+</html>

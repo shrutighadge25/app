@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="kickoff.css">
+    <title>Kick-Off Form</title>
+    <style>
+        .form-page {
+            display: none;
+        }
+        .form-page.active {
+            display: block;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 10px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .workflow-section {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .workflow-section h3 {
+            margin-top: 0;
+        }
+        .workflow-section h3.filled {
+            background-color: #d4edda;
+            color: #19d645;
+        }
+        .custom-multiselect { position: relative; }
+        .selected-box { border: 1px solid #ccc; padding: 6px; background: #fff; cursor: pointer; border-radius: 4px; }
+        .options-box { position: absolute; background: #fff; border: 1px solid #ccc; z-index: 10; width: 100%; max-height: 150px; overflow-y: auto; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div id="header-include"></div>
+    <section class="container">
+        <header>Project Kick-Off Form</header>
+        <form id="kickoff-form">
+            <!-- First Page -->
+            <div class="form-page active" id="page1">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Time Stamp</label>
+                    <input type="date" name="timestamp" id="timestamp" required readonly />
+                    </div>
+                    <div class="form-group">
+                        <label>KOM No.</label>
+                        <input type="text" name="kom_no" id="kom_no"  required readonly />
+                    </div>
+                    <div class="form-group">
+                        <label>Venue</label>
+                        <input type="text" name="venue" required />
+                    </div>
+                    <div class="form-group">
+                        <label>CCN</label>
+                        <input type="text" name="ccn" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Customer Name</label>
+                        <input type="text" name="customer_name" required />
+                    </div>
+                     <div class="form-group">
+                        <label>Machine Name</label>
+                        <input type="text" name="machine_name" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Machine Model</label>
+                        <input type="text" name="machine_model" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Address</label>
+                        <input type="text" name="Address" required />
+                    </div>
+                    <div class="form-group">
+                        <label>PO Delivery Date</label>
+                        <input type="date" name="po_delivery_date" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Members Present</label>
+                        <div id="members-present-dropdown" class="custom-multiselect">
+        <div id="members-present-selected" class="selected-box" onclick="toggleMembersDropdown()">Select members...</div>
+        <div id="members-present-options" class="options-box" style="display:none;"></div>
+    </div>
+    <input type="hidden" name="members_present" id="members_present_hidden" />
+                    </div>
+                    <!-- Machine Category and Order Type fields as text input -->
+                    <div class="form-group">
+    <label>Machine Category</label>
+    <input type="text" name="machine_category" id="machine_category" required />
+</div>
+<div class="form-group" >
+    <label>Order Type</label>
+    <input type="text" name="order_type" id="order_type" required style="width:100%;height:38px;" />
+  </div>
+<!-- New fields for Machine CP Qty and Machine Optional CP Qty -->
+<div class="form-group">
+    <label>Machine CP Qty</label>
+    <input type="number" name="machine_cp_qty" id="machine_cp_qty" min="0" required style="width:100%;height:38px;" />
+</div>
+<div class="form-group">
+    <label>Machine Optional CP Qty</label>
+    <input type="number" name="machine_optional_cp_qty" id="machine_optional_cp_qty" min="0" required style="width:100%;height:38px;" />
+</div>
+<div class="form-group" >
+    <label>CCN Status</label>
+    <select name="ccn_status" id="ccn_status" required style="width:100%;height:38px;appearance: none;-webkit-appearance: none;-moz-appearance: none;border:1px solid #ccc;border-radius:4px;padding:0 8px;font-size:1em;background:#fff;">
+      <option value="Live">Live</option>
+      <option value="Close">Close</option>
+    </select>
+</div>
+                </div>
+                <!-- Machine Basics Table -->
+                <label>Machine Basics</label>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td> PLC</td>
+                            <td><input type="text" name="machine_basics[1]" /></td>
+                        </tr>
+                        <tr>
+                            <td> HMI / IPC</td>
+                            <td><input type="text" name="machine_basics[2]" /></td>
+                        </tr>
+                        <tr>
+                            <td> Language</td>
+                            <td><input type="text" name="machine_basics[3]" /></td>
+                        </tr>
+                        <tr>
+                            <td> CE Certification</td>
+                            <td><input type="text" name="machine_basics[4]" /></td>
+                        </tr>
+                        <tr>
+                            <td>Voltage (Power Connection)</td>
+                            <td><input type="text" name="machine_basics[5]" /></td>
+                        </tr>
+                        <tr>
+                            <td> Compress Air Requirement</td>
+                            <td><input type="text" name="machine_basics[6]" /></td>
+                        </tr>
+                        <tr>
+                            <td>Alarms & Messages Language</td>
+                            <td><input type="text" name="machine_basics[7]" /></td>
+                        </tr>
+                        <tr>
+                            <td> Operation Manual Language</td>
+                            <td><input type="text" name="machine_basics[8]" /></td>
+                        </tr>
+                        <tr>
+                            <td> URS</td>
+                            <td><input type="text" name="machine_basics[9]" /></td>
+                        </tr>
+                        <tr>
+                            <td> Product Samples</td>
+                            <td><input type="text" name="machine_basics[10]" /></td>
+                        </tr>
+                        <tr>
+                            <td> Machine Link up</td>
+                            <td><input type="text" name="machine_basics[11]" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <!-- Machine Features Table with Add Row Option -->
+                <label>Machine Features</label>
+                <table id="machine-features-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Rows will be added here -->
+                    </tbody>
+                </table>
+                <button type="button" onclick="addMachineFeature()">Add Row</button><br>
+                <!-- Additional/Other Options Table -->
+                <label>Additional/Other Options</label>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>Installation & Commissioning</td>
+                            <td><input type="text" name="additional_options[installation_commissioning]" /></td>
+                        </tr>
+                        <tr>
+                            <td>Transportation</td>
+                            <td><input type="text" name="additional_options[transportation]" /></td>
+                        </tr>
+                        <tr>
+                            <td>IQ/OQ/PQ/DQ</td>
+                            <td><input type="text" name="additional_options[iq_oq_pq_dq]" /></td>
+                        </tr>
+                        <tr>
+                            <td>Operation Manual</td>
+                            <td><input type="text" name="additional_options[operation_manual]" /></td>
+                        </tr>
+                        <tr>
+                            <td>Product & Packaging Material From</td>
+                            <td><input type="text" name="additional_options[product_packaging_material]" /></td>
+                        </tr>
+                    </tbody>
+                </table><br>
+                <label for="project_kickoff_details">Project Kick-off Details:</label>
+                <textarea id="project_kickoff_details" name="project_kickoff_details"></textarea><br>
+                <button type="button" onclick="showPage(2)">Next</button>
+            </div>
+            <!-- Second Page -->
+            <div class="form-page" id="page2">
+                <div class="workflow-section sales-section">
+                  <h3>SALES</h3>
+                  <div class="form-grid">
+                    <div class="form-group">
+                        <label for="po_receipt_date">PO Receipt Date:</label>
+                        <input type="date" id="po_receipt_date" name="po_receipt_date">
+                    </div>
+                    <div class="form-group">
+                        <label for="oa_generation_date">OA Generation Date:</label>
+                        <input type="date" id="oa_generation_date" name="oa_generation_date">
+                    </div>
+                    <div class="form-group">
+                        <label for="kom_date">KOM Date:</label>
+                        <input type="date" id="kom_date" name="kom_date">
+                    </div>
+                    <div class="form-group">
+                        <label for="advance_payment_receipt_date">Advance Payment Receipt Date:</label>
+                        <input type="date" id="advance_payment_receipt_date" name="advance_payment_receipt_date">
+                    </div>
+                    <div class="form-group">
+                        <label for="balance_payment_receipt_date">Balance Payment Receipt Date:</label>
+                        <input type="date" id="balance_payment_receipt_date" name="balance_payment_receipt_date">
+                    </div>
+                    <div class="form-group">
+                        <label for="cp_layout_approvals">CP Layout Approvals:</label>
+                        <input type="date" id="cp_layout_approvals" name="cp_layout_approvals">
+                    </div>
+                    <div class="form-group">
+                        <label for="machine_layout_approvals">Machine Layout Approvals:</label>
+                        <input type="date" id="machine_layout_approvals" name="machine_layout_approvals">
+                    </div>
+                    <div class="form-group">
+                        <label for="room_layout_approvals">Room Layout Approvals:</label>
+                        <input type="date" id="room_layout_approvals" name="room_layout_approvals">
+                    </div>
+                    <div class="form-group">
+                        <label for="dispatch_clearance">Dispatch Clearance:</label>
+                        <input type="date" id="dispatch_clearance" name="dispatch_clearance">
+                    </div>
+                  </div>
+                </div>
+                <div class="workflow-section design-section">
+                  <h3>DESIGN</h3>
+                  <div class="form-grid">
+                    <div class="form-group">
+                        <label for="loa_optional">LOA Optional:</label>
+                        <input type="date" id="loa_optional" name="loa_optional">
+                    </div>
+                    <div class="form-group">
+                        <label for="loa_basic">LOA Basic :</label>
+                        <input type="date" id="loa_basic" name="loa_basic">
+                    </div>
+                    <div class="form-group">
+                        <label for="dq_release">DQ Release:</label>
+                        <input type="date" id="dq_release" name="dq_release">
+                    </div>
+                  </div>
+                </div>
+                <div class="workflow-section ppc-section">
+                  <h3>PPC</h3>
+                  <div class="form-grid">
+                    <div class="form-group">
+                        <label for="ppc_basic_date">PPC Basic Date (As per Kickoff):</label>
+                        <input type="date" id="ppc_basic_date" name="ppc_basic_date">
+                    </div>
+                    <div class="form-group">
+                        <label for="ppc_optional_date">PPC Optional Date (As per Kickoff):</label>
+                        <input type="date" id="ppc_optional_date" name="ppc_optional_date">
+                    </div>
+                  </div>
+                </div>
+                <div class="workflow-section cp-section">
+                  <h3>CP</h3>
+                  <div class="form-grid">
+                    <div class="form-group">
+                        <label for="cp_design_release_date">CP Design Release Date:</label>
+                        <input type="date" id="cp_design_release_date" name="cp_design_release_date">
+                    </div>
+                    <div class="form-group">
+                        <label for="cp_manufacturing_date">CP Manufacturing Date:</label>
+                        <input type="date" id="cp_manufacturing_date" name="cp_manufacturing_date">
+                    </div>
+                  </div>
+                </div>
+                <div class="workflow-section assembly-section">
+                  <h3>ASSEMBLY</h3>
+                  <div class="form-grid">
+                    <div class="form-group">
+                        <label for="machine_manufacturing_basic">Machine Manufacturing Basic:</label>
+                        <input type="date" id="machine_manufacturing_basic" name="machine_manufacturing_basic">
+                    </div>
+                    <div class="form-group">
+                        <label for="machine_manufacturing_customisation">Machine Manufacturing Customisation:</label>
+                        <input type="date" id="machine_manufacturing_customisation" name="machine_manufacturing_customisation">
+                    </div>
+                    <div class="form-group">
+                        <label for="ifat_std_cp">IFAT With Std CP (As per Kickoff):</label>
+                        <input type="date" id="ifat_std_cp" name="ifat_std_cp">
+                    </div>
+                    <div class="form-group">
+                        <label for="ifat_customer_cp">IFAT With Customer CP (As per Kickoff):</label>
+                        <input type="date" id="ifat_customer_cp" name="ifat_customer_cp">
+                    </div>
+                  </div>
+                </div>
+                <div class="workflow-section qa-section">
+                  <h3>QA</h3>
+                  <div class="form-grid">
+                    <div class="form-group">
+                        <label for="pmr_genration_submission_date">PMR Generation & Submission to Customer Date:</label>
+                        <input type="date" id="pmr_genration_submission_date" name="pmr_genration_submission_date">
+                    </div>
+                    <div class="form-group">
+                        <label for="products_receipt_date">Product Receipt Date:</label>
+                        <input type="date" id="products_receipt_date" name="products_receipt_date">
+                    </div>
+                    <div class="form-group">
+                        <label for="packaging_receipt_date">Packaging Receipt Date:</label>
+                        <input type="date" id="packaging_receipt_date" name="packaging_receipt_date">
+                    </div>
+                    <div class="form-group">
+                        <label for="ifat_protocol_release">IFAT Protocols Release:</label>
+                        <input type="date" id="ifat_protocol_release" name="ifat_protocol_release">
+                    </div>
+                    <div class="form-group">
+                        <label for="cfat">CFAT (As per Kickoff):</label>
+                        <input type="date" id="cfat" name="cfat">
+                    </div>
+                    <div class="form-group">
+                        <label for="compliance">Compliance:</label>
+                        <input type="date" id="compliance" name="compliance">
+                    </div>
+                  </div>
+                </div>
+                <div class="workflow-section dispatch-section">
+                  <h3>DISPATCH</h3>
+                  <div class="form-grid">
+                    <div class="form-group">
+                        <label for="planned_dispatch_date">Planned Dispatch Date (As per Kickoff):</label>
+                        <input type="date" id="planned_dispatch_date" name="planned_dispatch_date">
+                    </div>
+                  </div>
+                </div>
+                <button type="button" onclick="showPage(1)">Back</button>
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </section>
+    <div id="footer-include"></div>
+    <script>
+        function showPage(pageNumber) {
+            const pages = document.querySelectorAll('.form-page');
+            pages.forEach((page, index) => {
+                page.classList.toggle('active', index + 1 === pageNumber);
+            });
+        }
+
+        function addMachineFeature() {
+            const table = document.getElementById('machine-features-table').getElementsByTagName('tbody')[0];
+            const newRow = table.insertRow();
+            const featureCell = newRow.insertCell(0);
+            const descriptionCell = newRow.insertCell(1);
+            featureCell.innerHTML = '<input type="text" name="machine_features[feature]" />';
+            descriptionCell.innerHTML = '<input type="text" name="machine_features[description]" />';
+        }
+
+        // Highlight workflow section header green if all inputs are filled
+        function checkWorkflowSections() {
+          document.querySelectorAll('.workflow-section').forEach(section => {
+            const inputs = section.querySelectorAll('input');
+            let allFilled = true;
+            inputs.forEach(input => {
+              if (!input.value) allFilled = false;
+            });
+            const header = section.querySelector('h3');
+            if (allFilled && inputs.length > 0) {
+              header.classList.add('filled');
+            } else {
+              header.classList.remove('filled');
+            }
+          });
+        }
+        // Attach input event listeners to all workflow-section inputs
+        function attachWorkflowInputListeners() {
+          document.querySelectorAll('.workflow-section input').forEach(input => {
+            input.addEventListener('input', checkWorkflowSections);
+          });
+        }
+
+        // --- KOM No. auto-generation logic ---
+        async function fetchNextKomNo() {
+          try {
+            const res = await fetch('/api/kickoff/next-kom-no');
+            if (res.ok) {
+              const text = await res.text();
+              document.getElementById('kom_no').value = text;
+            } else {
+              document.getElementById('kom_no').value = 'KOM-00-' + new Date().getFullYear();
+            }
+          } catch {
+            document.getElementById('kom_no').value = 'KOM-00-' + new Date().getFullYear();
+          }
+        }
+
+        // --- Members Present Multi-Select Dropdown Logic ---
+let membersPresentOptions = [];
+
+function toggleMembersDropdown() {
+  const box = document.getElementById('members-present-options');
+  if (box.style.display === 'none' || box.style.display === '') {
+    renderMembersPresentOptions(); // Always render when opening
+    box.style.display = 'block';
+    // Focus the input field for new member
+    setTimeout(() => {
+      const input = document.getElementById('new-member-input');
+      if (input) input.focus();
+    }, 100);
+  } else {
+    box.style.display = 'none';
+  }
+}
+
+document.addEventListener('click', function(e) {
+  if (!document.getElementById('members-present-dropdown').contains(e.target)) {
+    document.getElementById('members-present-options').style.display = 'none';
+  }
+});
+
+function renderMembersPresentOptions() {
+  const optionsBox = document.getElementById('members-present-options');
+  optionsBox.innerHTML = '';
+  membersPresentOptions.forEach(opt => {
+    const id = 'member-opt-' + btoa(opt).replace(/=/g, '');
+    const div = document.createElement('div');
+    div.innerHTML = `<label><input type=\"checkbox\" value=\"${opt}\" onchange=\"updateMembersPresentSelected()\" id=\"${id}\"> ${opt}</label>`;
+    optionsBox.appendChild(div);
+  });
+  // Add new member input always at the bottom
+  const addDiv = document.createElement('div');
+  addDiv.style.marginTop = '8px';
+  addDiv.style.borderTop = '1px solid #eee';
+  addDiv.style.paddingTop = '6px';
+  addDiv.innerHTML = `<input type=\"text\" id=\"new-member-input\" placeholder=\"Add new member...\" style=\"width:70%;margin-right:4px;\"> <button type=\"button\" onclick=\"addNewMemberOption()\">Add</button>`;
+  optionsBox.appendChild(addDiv);
+}
+
+function updateMembersPresentSelected() {
+  const checked = Array.from(document.querySelectorAll('#members-present-options input[type=checkbox]:checked')).map(cb => cb.value);
+  document.getElementById('members-present-selected').innerText = checked.length ? checked.join(', ') : 'Select members...';
+  document.getElementById('members_present_hidden').value = checked.join(',');
+}
+
+function addNewMemberOption() {
+  const input = document.getElementById('new-member-input');
+  const val = input.value.trim();
+  if (val && !membersPresentOptions.includes(val)) {
+    membersPresentOptions.push(val);
+    renderMembersPresentOptions();
+    input.value = '';
+  }
+}
+
+async function fetchMembersPresentOptions() {
+  try {
+    const res = await fetch('/api/kickoff/members-present-options');
+    if (res.ok) {
+      const arr = await res.json();
+      if (Array.isArray(arr)) {
+        membersPresentOptions = arr;
+        renderMembersPresentOptions();
+      }
+    }
+  } catch {}
+}
+
+        // --- Kickoff form submission logic ---
+        document.getElementById('kickoff-form').addEventListener('submit', async function(e) {
+          e.preventDefault();
+          // Collect all form data
+          const form = document.getElementById('kickoff-form');
+          const data = {};
+          // Page 1 fields
+          data.timestamp = document.getElementById('timestamp').value;
+          data.komNo = document.getElementById('kom_no').value;
+          data.venue = form.querySelector('input[name="venue"]').value;
+          data.ccn = form.querySelector('input[name="ccn"]').value;
+          data.customerName = form.querySelector('input[name="customer_name"]').value;
+          data.machineName = form.querySelector('input[name="machine_name"]').value;
+          data.machineModel = form.querySelector('input[name="machine_model"]').value;
+          data.address = form.querySelector('input[name="Address"]').value;
+          data.poDeliveryDate = form.querySelector('input[name="po_delivery_date"]').value;
+          data.membersPresent = document.getElementById('members_present_hidden').value;
+          data.machineCategory = document.getElementById('machine_category').value;
+          data.orderType = document.getElementById('order_type').value;
+          // Add new fields
+          data.machineCpQty = document.getElementById('machine_cp_qty').value;
+          data.machineOptionalCpQty = document.getElementById('machine_optional_cp_qty').value;
+          data.ccnStatus = document.getElementById('ccn_status').value;
+          // Machine Basics
+          const basicsArr = [];
+          for (let i = 1; i <= 11; i++) {
+            basicsArr.push(form.querySelector(`input[name="machine_basics[${i}]"]`).value);
+          }
+          data.machineBasics = JSON.stringify(basicsArr);
+          // Machine Features
+          const featuresArr = [];
+          const featuresRows = document.querySelectorAll('#machine-features-table tbody tr');
+          featuresRows.forEach(row => {
+            const feature = row.querySelector('input[name="machine_features[feature]"]')?.value || '';
+            const description = row.querySelector('input[name="machine_features[description]"]')?.value || '';
+            if (feature || description) featuresArr.push({ feature, description });
+          });
+          data.machineFeatures = JSON.stringify(featuresArr);
+          // Additional/Other Options
+          const addOpts = {
+            installationCommissioning: form.querySelector('input[name="additional_options[installation_commissioning]"]').value,
+            transportation: form.querySelector('input[name="additional_options[transportation]"]').value,
+            iqOqPqDq: form.querySelector('input[name="additional_options[iq_oq_pq_dq]"]').value,
+            operationManual: form.querySelector('input[name="additional_options[operation_manual]"]').value,
+            productPackagingMaterial: form.querySelector('input[name="additional_options[product_packaging_material]"]').value
+          };
+          data.additionalOptions = JSON.stringify(addOpts);
+          data.projectKickoffDetails = form.querySelector('textarea[name="project_kickoff_details"]').value;
+          // Page 2 fields (workflow sections)
+          [
+            'po_receipt_date','oa_generation_date','kom_date','advance_payment_receipt_date','balance_payment_receipt_date',
+            'cp_layout_approvals','machine_layout_approvals','room_layout_approvals','dispatch_clearance',
+            'loa_optional','loa_basic','dq_release','ppc_basic_date','ppc_optional_date',
+            'cp_design_release_date','cp_manufacturing_date','machine_manufacturing_basic','machine_manufacturing_customisation',
+            'ifat_std_cp','ifat_customer_cp','pmr_genration_submission_date','products_receipt_date','packaging_receipt_date',
+            'ifat_protocol_release','cfat','compliance','planned_dispatch_date'
+          ].forEach(id => {
+            data[id] = form.querySelector(`#${id}`)?.value || '';
+          });
+          // Convert timestamp to ISO string
+          if (data.timestamp) {
+            data.timestamp = new Date(data.timestamp).toISOString();
+          }
+          try {
+            const response = await fetch('/api/kickoff', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(data)
+            });
+            if (response.ok) {
+              alert('Kickoff form submitted and saved!');
+              // Mark this CCN as kickoff completed in localStorage
+              if (data.ccn) {
+                let completed = JSON.parse(localStorage.getItem('kickoffCompletedCCNs') || '[]');
+                if (!completed.includes(data.ccn)) {
+                  completed.push(data.ccn);
+                  localStorage.setItem('kickoffCompletedCCNs', JSON.stringify(completed));
+                }
+              }
+              form.reset();
+              // Set timestamp to today again
+              const today = new Date().toISOString().split('T')[0];
+              document.getElementById('timestamp').value = today;
+              await fetchNextKomNo();
+              showPage(1);
+            } else {
+              alert('Error submitting kickoff form.');
+            }
+          } catch (err) {
+            alert('Error submitting kickoff form.');
+          }
+        });
+
+        window.addEventListener('DOMContentLoaded', async function() {
+          // Set timestamp to today
+          const today = new Date().toISOString().split('T')[0];
+          document.getElementById('timestamp').value = today;
+          await fetchNextKomNo();
+          await fetchMembersPresentOptions();
+
+          // Autofill kickoff form if ccn param is present
+          const urlParams = new URLSearchParams(window.location.search);
+          const ccn = urlParams.get('ccn');
+          if (ccn) {
+            try {
+              const res = await fetch(`/api/po/by-ccn?ccn=${encodeURIComponent(ccn)}`);
+              if (res.ok) {
+                const po = await res.json();
+                if (po) {
+                  // Map PO fields to kickoff form fields (adjust as needed)
+                  if (po.ccn) document.querySelector('input[name="ccn"]').value = po.ccn;
+                  if (po.customerName) document.querySelector('input[name="customer_name"]').value = po.customerName;
+                  if (po.machineName) document.querySelector('input[name="machine_name"]').value = po.machineName;
+                  if (po.modelName) document.querySelector('input[name="machine_model"]').value = po.modelName;
+                  if (po.poDeliveryDate) document.querySelector('input[name="po_delivery_date"]').value = po.poDeliveryDate;
+
+                  // Concatenate address fields for Address
+                  let addressParts = [];
+                  if (po.addressLine1) addressParts.push(po.addressLine1);
+                  if (po.city) addressParts.push(po.city);
+                  if (po.state) addressParts.push(po.state);
+                  if (po.country) addressParts.push(po.country);
+                  if (addressParts.length > 0) {
+                    document.querySelector('input[name="Address"]').value = addressParts.join(', ');
+                  }
+                  // Set Machine Category input
+                  if (po.machineCategory) {
+                    document.getElementById('machine_category').value = po.machineCategory;
+                  }
+                  // Set Order Type input
+                  if (po.orderType) {
+                    document.getElementById('order_type').value = po.orderType;
+                  }
+                  // Add more mappings as needed for your kickoff form fields
+                }
+              }
+            } catch {}
+          }
+          attachWorkflowInputListeners();
+          checkWorkflowSections();
+        });
+
+    fetch('/fragments/header.html').then(r=>r.text()).then(html=>{
+      document.getElementById('header-include').innerHTML = html;
+    });
+    fetch('/fragments/footer.html').then(r=>r.text()).then(html=>{
+      document.getElementById('footer-include').innerHTML = html;
+    });
+    </script>
+</body>
+</html>

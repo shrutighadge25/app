@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Purchase Order Monthly Report</title>
+  <link rel="stylesheet" href="po.css" />
+  <style>
+    body { background: #f6f8fa; margin: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+    .po-report-container {
+      margin: 40px auto;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+      padding: 24px 12px 18px 12px;
+      max-width: 98vw;
+      width: 1200px;
+    }
+    .po-report-container header {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 18px;
+      color: #35474d;
+      text-align: center;
+    }
+    .report-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 18px;
+      justify-content: center;
+    }
+    .report-controls label {
+      font-weight: 500;
+      color: #333;
+    }
+    .report-controls select, .report-controls button {
+      font-size: 1em;
+      padding: 4px 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin-right: 4px;
+    }
+    .report-controls button {
+      background: #35474d;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .report-controls button:hover {
+      background: #f37916;
+    }
+    .table-responsive {
+      width: 100%;
+      overflow-x: auto;
+    }
+    .report-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0 auto;
+      background: #fafbfc;
+      font-size: 0.98em;
+      min-width: 900px;
+    }
+    .report-table th, .report-table td {
+      border: 1px solid #e0e0e0;
+      padding: 8px 10px;
+      text-align: left;
+    }
+    .report-table th {
+      background: #35474d;
+      color: #fff;
+      font-weight: 600;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+    .report-table tr:nth-child(even) {
+      background: #f3f6fa;
+    }
+    .report-table tr:hover {
+      background: #ffe6cc;
+      transition: background 0.2s;
+    }
+    @media (max-width: 1200px) {
+      .report-table { font-size: 0.95em; min-width: 700px; }
+      .po-report-container { width: 99vw; }
+    }
+    @media (max-width: 900px) {
+      .po-report-container { padding: 10px 2vw; }
+      .report-table { font-size: 0.93em; min-width: 600px; }
+    }
+    @media (max-width: 600px) {
+      .po-report-container { padding: 2vw 1vw; }
+      .report-controls { flex-direction: column; gap: 6px; }
+      .report-table { font-size: 0.91em; min-width: 400px; }
+      .report-table th, .report-table td { padding: 6px 4px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="po-report-container">
+    <header>Monthly Purchase Order Report</header>
+    <div class="report-controls">
+      <label for="reportYear">Year:</label>
+      <select id="reportYear"></select>
+      <label for="reportMonth">Month:</label>
+      <select id="reportMonth">
+        <option value="1">January</option>
+        <option value="2">February</option>
+        <option value="3">March</option>
+        <option value="4">April</option>
+        <option value="5">May</option>
+        <option value="6">June</option>
+        <option value="7">July</option>
+        <option value="8">August</option>
+        <option value="9">September</option>
+        <option value="10">October</option>
+        <option value="11">November</option>
+        <option value="12">December</option>
+      </select>
+      <button id="loadReportBtn" type="button">Load</button>
+    </div>
+    <div class="table-responsive">
+      <table id="reportTable" class="report-table">
+        <thead>
+          <tr>
+            <th>Record No</th>
+            <th>Timestamp</th>
+            <th>CCN</th>
+            <th>Sales Person</th>
+            <th>PO Ref No</th>
+            <th>PO Date</th>
+            <th>PO Delivery Date</th>
+            <th>PO Value (Lacs)</th>
+            <th>Customer Name</th>
+            <th>Machine Name</th>
+            <th>Model Name</th>
+            <th>Category</th>
+            <th>Order Type</th>
+            <th>Country</th>
+            <th>State</th>
+            <th>City</th>
+            <th>Address 1</th>
+            <th>Address 2</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Data rows will be inserted here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script type="module">
+    // Populate year dropdown (last 5 years)
+    const reportYear = document.getElementById('reportYear');
+    const reportMonth = document.getElementById('reportMonth');
+    const loadReportBtn = document.getElementById('loadReportBtn');
+    const reportTableBody = document.querySelector('#reportTable tbody');
+    const now = new Date();
+    for (let y = now.getFullYear(); y >= now.getFullYear() - 4; y--) {
+      const opt = document.createElement('option');
+      opt.value = y;
+      opt.textContent = y;
+      reportYear.appendChild(opt);
+    }
+    reportYear.value = now.getFullYear();
+    reportMonth.value = now.getMonth() + 1;
+    async function loadReport() {
+      const year = reportYear.value;
+      const month = reportMonth.value;
+      const res = await fetch(`/api/po/monthly-report?year=${year}&month=${month}`);
+      if (res.ok) {
+        const data = await res.json();
+        renderReportTable(data);
+      } else {
+        reportTableBody.innerHTML = '<tr><td colspan="18">Error loading report.</td></tr>';
+      }
+    }
+    function renderReportTable(data) {
+      if (!data || data.length === 0) {
+        reportTableBody.innerHTML = '<tr><td colspan="18">No records found for this month.</td></tr>';
+        return;
+      }
+      reportTableBody.innerHTML = data.map(row => `
+        <tr>
+          <td>${row.recordNo || ''}</td>
+          <td>${row.timestamp ? new Date(row.timestamp).toLocaleString() : ''}</td>
+          <td>${row.ccn || ''}</td>
+          <td>${row.salesPerson || ''}</td>
+          <td>${row.poReferenceNumber || ''}</td>
+          <td>${row.poDate || ''}</td>
+          <td>${row.poDeliveryDate || ''}</td>
+          <td>${row.poValueLacs != null ? row.poValueLacs : ''}</td>
+          <td>${row.customerName || ''}</td>
+          <td>${row.machineName || ''}</td>
+          <td>${row.modelName || ''}</td>
+          <td>${row.machineCategory || ''}</td>
+          <td>${row.orderType || ''}</td>
+          <td>${row.country || ''}</td>
+          <td>${row.state || ''}</td>
+          <td>${row.city || ''}</td>
+          <td>${row.addressLine1 || ''}</td>
+          <td>${row.addressLine2 || ''}</td>
+        </tr>
+      `).join('');
+    }
+    loadReportBtn.addEventListener('click', loadReport);
+    window.addEventListener('DOMContentLoaded', loadReport);
+  </script>
+</body>
+</html>

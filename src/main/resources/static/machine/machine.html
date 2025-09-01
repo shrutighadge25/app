@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Page Form</title>
+    <link rel="stylesheet" href="../machine/machine.css">
+</head>
+<body>
+    <div class="container">
+        <header style="display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 24px;">
+                <div>
+                    <label style="font-size:0.75em; color:#1976d2; font-weight:400; margin-bottom:2px;"></label>
+                    <span id="timestamp" name="timestamp" style="font-size:0.75em; color:#333; margin-left:4px;"></span>
+                </div>
+                <span>Update Machine CCN</span>
+            </div>
+        </header>
+        <div class="header" style="margin-bottom: 20px;">
+            <button class="tab" onclick="showPage('page1')">Purchase Order</button>
+            <button class="tab" onclick="showPage('page2')">The Project Kick-Off Review</button>
+            <button class="tab" onclick="showPage('page3')">Assembly Operations</button>
+            <button class="tab" onclick="showPage('page4')">Assy Actuals</button>
+            <button class="tab" onclick="showPage('page5')">Review</button>
+            <button class="tab" onclick="showPage('page6')">Dispatch Details</button>
+            <button class="tab" onclick="showPage('page7')">Formulated Column</button>
+        </div>
+        <div class="machine-header-card" style="background: #e3f2fd; border-radius: 10px; padding: 18px 24px; margin-bottom: 18px; display: flex; gap: 32px; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+            <div style="flex:1; min-width: 120px;">
+                <label style="font-size:1em; color:#1976d2; font-weight:600; margin-bottom:2px;">CCN</label>
+                <div style="font-size:1.1em; color:#333; font-weight:500;"><input type="text" name="ccn" style="background:transparent; border:none; font-size:1.1em; color:#333; font-weight:500; width:100%; outline:none;" readonly></div>
+            </div>
+            <div style="flex:1; min-width: 120px;">
+                <label style="font-size:1em; color:#1976d2; font-weight:600; margin-bottom:2px;">Machine Name</label>
+                <div style="font-size:1.1em; color:#333; font-weight:500;"><input type="text" name="machineName" style="background:transparent; border:none; font-size:1.1em; color:#333; font-weight:500; width:100%; outline:none;" readonly></div>
+            </div>
+            <div style="flex:1; min-width: 120px;">
+                <label style="font-size:1em; color:#1976d2; font-weight:600; margin-bottom:2px;">Model</label>
+                <div style="font-size:1.1em; color:#333; font-weight:500;"><input type="text" name="model" style="background:transparent; border:none; font-size:1.1em; color:#333; font-weight:500; width:100%; outline:none;" readonly></div>
+            </div>
+            <div style="flex:1; min-width: 120px;">
+                <label style="font-size:1em; color:#1976d2; font-weight:600; margin-bottom:2px;">Customer Name</label>
+                <div style="font-size:1.1em; color:#333; font-weight:500;"><input type="text" name="customerName" style="background:transparent; border:none; font-size:1.1em; color:#333; font-weight:500; width:100%; outline:none;" readonly></div>
+            </div>
+        </div>
+        <div class="form-container">
+            <div class="form-grid" style="margin-bottom: 20px; grid-template-columns: repeat(4, 1fr); display:none;">
+                <div class="form-group" style="min-width:0;">
+                    <label style="font-size:0.95em;">CCN:</label>
+                    <input type="text" name="ccn" style="font-size:0.95em; padding:6px;" />
+                </div>
+                <div class="form-group" style="min-width:0;">
+                    <label style="font-size:0.95em;">Machine Name:</label>
+                    <input type="text" name="machineName" style="font-size:0.95em; padding:6px;" />
+                </div>
+                <div class="form-group" style="min-width:0;">
+                    <label style="font-size:0.95em;">Model:</label>
+                    <input type="text" name="model" style="font-size:0.95em; padding:6px;" />
+                </div>
+                <div class="form-group" style="min-width:0;">
+                    <label style="font-size:0.95em;">Customer Name:</label>
+                    <input type="text" name="customerName" style="font-size:0.95em; padding:6px;" />
+                </div>
+            </div>
+            <!-- Page 1 -->
+            <div id="page1" class="page">
+                <h2>Purchase Order</h2>
+                <form class="form-grid" style="grid-template-columns: repeat(4, 1fr);">
+                    <div class="form-group"><label>Record No:</label><input type="text" name="recordNo"></div>
+                    <div class="form-group"><label>PO Ref No:</label><input type="text" name="poRefNo"></div>
+                    <div class="form-group"><label>PO Date:</label><input type="date" name="poDate"></div>
+                    <div class="form-group"><label>PO Delivery Date:</label><input type="date" name="poDeliveryDate"></div>
+                    <div class="form-group"><label>PO Value-Lacs:</label><input type="number" name="poValueLacs" style="height:38px; min-width:0; width:100%; max-width:250px; font-size:1em; padding:8px;"></div>
+                    <div class="form-group"><label>Sales Person:</label><input type="text" name="salesPerson"></div>
+                    <div class="form-group"><label>Order Type:</label><input type="text" name="orderType"></div>
+                    <div class="form-group"><label>Address:</label><input type="text" name="address"></div>
+                </form>
+            </div>
+            <!-- Page 2 -->
+            <div id="page2" class="page" style="display:none;">
+                <h2>The Project Kick-Off Review</h2>
+                <form class="form-grid" style="grid-template-columns: repeat(4, 1fr);">
+                    <div class="form-group"><label>Venue</label><input type="text" name="venue" required /></div>
+                    <div class="form-group"><label>KOM No.</label><input type="text" name="komNo" placeholder="IMA-PG Indore/2024/022" required /></div>
+                    <div class="form-group"><label>Members Present</label><input type="text" name="membersPresent" /></div>
+                    <div class="form-group"><label>Machine CP Qty:</label><input type="number" name="machineCpQty" style="height:38px; min-width:0; width:100%; max-width:250px; font-size:1em; padding:8px;"></div>
+                    <div class="form-group"><label>Machine Optional CP Qty:</label><input type="number" name="machineOptionalCpQty" style="height:38px; min-width:0; width:100%; max-width:250px; font-size:1em; padding:8px;"></div>
+                    <div class="form-group"><label for="po_receipt_date">PO Receipt Date:</label><input type="date" id="po_receipt_date" name="poReceiptDate"></div>
+                    <div class="form-group"><label for="oa_generation_date">OA Generation Date:</label><input type="date" id="oa_generation_date" name="oaGenerationDate"></div>
+                    <div class="form-group"><label for="kom_date">KOM Date:</label><input type="date" id="kom_date" name="komDate"></div>
+                    <div class="form-group"><label for="advance_payment_receipt_date">Advance Payment Receipt Date:</label><input type="date" id="advance_payment_receipt_date" name="advancePaymentReceiptDate"></div>
+                    <div class="form-group"><label for="balance_payment_receipt_date">Balance Payment Receipt Date:</label><input type="date" id="balance_payment_receipt_date" name="balancePaymentReceiptDate"></div>
+                    <div class="form-group"><label for="cp_layout_approvals">CP Layout Approvals:</label><input type="date" id="cp_layout_approvals" name="cpLayoutApprovals"></div>
+                    <div class="form-group"><label for="machine_layout_approvals">Machine Layout Approvals:</label><input type="date" id="machine_layout_approvals" name="machineLayoutApprovals"></div>
+                    <div class="form-group"><label for="room_layout_approvals">Room Layout Approvals:</label><input type="date" id="room_layout_approvals" name="roomLayoutApprovals"></div>
+                    <div class="form-group"><label for="loa_release">LOA Release:</label><input type="date" id="loa_release" name="loaRelease"></div>
+                    <div class="form-group"><label for="dq_release">DQ Release:</label><input type="date" id="dq_release" name="dqRelease"></div>
+                    <div class="form-group"><label for="ppc_basic_date">PPC Basic Date (As per Kickoff):</label><input type="date" id="ppc_basic_date" name="ppcBasicDate"></div>
+                    <div class="form-group"><label for="ppc_optional_date">PPC Optional Date (As per Kickoff):</label><input type="date" id="ppc_optional_date" name="ppcOptionalDate"></div>
+                    <div class="form-group"><label for="cp_design_release_date">CP Design Release Date:</label><input type="date" id="cp_design_release_date" name="cpDesignReleaseDate"></div>
+                    <div class="form-group"><label for="machine_manufacturing_basic">Machine Manufacturing Basic:</label><input type="date" id="machine_manufacturing_basic" name="machineManufacturingBasic"></div>
+                    <div class="form-group"><label for="machine_manufacturing_customisation">Machine Manufacturing Customisation:</label><input type="date" id="machine_manufacturing_customisation" name="machineManufacturingCustomisation"></div>
+                    <div class="form-group"><label for="cp_manufacturing_date">CP Manufacturing Date:</label><input type="date" id="cp_manufacturing_date" name="cpManufacturingDate"></div>
+                    <div class="form-group"><label for="pmr_genration_submission_date">PMR Generation & Submission to Customer Date:</label><input type="date" id="pmr_genration_submission_date" name="pmrGenrationSubmissionDate"></div>
+                    <div class="form-group"><label for="products_receipt_date">Product Receipt Date:</label><input type="date" id="products_receipt_date" name="productsReceiptDate"></div>
+                    <div class="form-group"><label for="packaging_receipt_date">Packaging Receipt Date:</label><input type="date" id="packaging_receipt_date" name="packagingReceiptDate"></div>
+                    <div class="form-group"><label for="ifat_protocol_release">IFAT Protocols Release:</label><input type="date" id="ifat_protocol_release" name="ifatProtocolRelease"></div>
+                    <div class="form-group"><label for="ifat_std_cp">IFAT With Std CP (As per Kickoff):</label><input type="date" id="ifat_std_cp" name="ifatStdCp"></div>
+                    <div class="form-group"><label for="ifat_customer_cp">IFAT With Customer CP (As per Kickoff):</label><input type="date" id="ifat_customer_cp" name="ifatCustomerCp"></div>
+                    <div class="form-group"><label for="cfat">CFAT (As per Kickoff):</label><input type="date" id="cfat" name="cfat"></div>
+                    <div class="form-group"><label for="compliance">Compliance:</label><input type="date" id="compliance" name="compliance"></div>
+                    <div class="form-group"><label for="dispatch_clearance">Dispatch Clearance:</label><input type="date" id="dispatch_clearance" name="dispatchClearance"></div>
+                    <div class="form-group"><label for="planned_dispatch_date">Planned Dispatch Date (As per Kickoff):</label><input type="date" id="planned_dispatch_date" name="plannedDispatchDate"></div>
+                    
+                    
+                    <div class="form-group" style="grid-column: 1 / span 4;">
+                        <label for="machine_basics">Machine Basics:</label>
+                        <textarea id="machine_basics" name="machineBasics" style="width:99%; min-width:400px; height:60px;"></textarea>
+                    </div>
+                    <div class="form-group" style="grid-column: 1 / span 4;">
+                        <label for="machine_features">Machine Features:</label>
+                        <textarea id="machine_features" name="machineFeatures" style="width:99%; min-width:400px; height:60px;"></textarea>
+                    </div>
+                    <div class="form-group" style="grid-column: 1 / span 4;">
+                        <label for="additional_options">Additional Options:</label>
+                        <textarea id="additional_options" name="additionalOptions" style="width:99%; min-width:400px; height:60px;"></textarea>
+                    </div>
+                    <div class="form-group" style="grid-column: 1 / span 4;">
+                        <label for="project_kickoff_details">Project Kick-off Details:</label>
+                        <textarea id="project_kickoff_details" name="projectKickoffDetails"></textarea>
+                    </div>
+                </form>
+            </div>
+            <!-- Page 3 -->
+            <div id="page3" class="page" style="display:none;">
+                <h2>Assembly Operations</h2>
+                <form class="form-grid" style="grid-template-columns: repeat(4, 1fr);">
+                    <div class="form-group"><label>CCN Status:</label>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <input type="radio" name="ccnStatus" id="live" value="Live" checked><label for="live">Live</label>
+                            <input type="radio" name="ccnStatus" id="closed" value="Closed"><label for="closed">Closed</label>
+                        </div>
+                    </div>
+                    <div class="form-group"><label for="machine-category">Machine Category:</label>
+                        <input type="text" id="machine-category" name="machineCategory" style="height:38px; min-width:0; width:100%; max-width:250px; font-size:1em; padding:8px;" />
+                    </div>
+                    <div class="form-group"><label>Workmen:</label><input type="text" name="workmen"></div>
+                    <div class="form-group"><label>Std Task Of Machine:</label><input type="text" name="stdTaskOfMachine"></div>
+                    <div class="form-group"><label>Task Completed:</label><input type="number" name="taskCompleted" style="height:38px; min-width:0; width:100%; max-width:250px; font-size:1em; padding:8px;"></div>
+                    <div class="form-group"><label for="live-status">Live Status:</label>
+                        <select id="live-status" name="liveStatus" style="height:38px; min-width:0; width:100%; max-width:250px; font-size:1em; padding:8px;">
+                            <option value="awaited cfat">Awaited CFAT</option>
+                            <option value="cfat done">CFAT Done</option>
+                            <option value="cfat in progress">CFAT In Progress</option>
+                            <option value="customer cp trials">Customer CP Trials</option>
+                            <option value="degisn">Degisn</option>
+                            <option value="for dispatch">For Dispatch</option>
+                            <option value="hold-awaiting material">Hold-Awaiting Material</option>
+                            <option value="hold no plan">Hold No Plan</option>
+                            <option value="ifat done">IFAT Done</option>
+                            <option value="ifat in progress">IFAT In Progress</option>
+                            <option value="post cfat point closure">Post CFAT-Point Closure</option>
+                            <option value="post ifat point closure ">Post IFAT-Point Closure</option>
+                            <option value="ppc">PPC</option>
+                            <option value="ready">Ready</option>
+                            <option value="wip">WIP</option>
+                            <option value="wip kanban">WIP-Kanban</option>
+                            <option value="yet to plan">Yet To Plan</option>
+                            <option value="in hand">In Hand</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>Last Updated Data As On:</label><input type="date" name="lastUpdatedData"></div>
+                    <!-- Move these 4 fields up in a single row -->
+                    <div class="form-group"><label>Timer On Machine:</label>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <input type="radio" name="timerOnMachine" id="timer_yes" value="Yes"><label for="timer_yes">Yes</label>
+                            <input type="radio" name="timerOnMachine" id="timer_no" value="No"><label for="timer_no">No</label>
+                        </div>
+                    </div>
+                    <div class="form-group"><label for="cpTrialDropdown">CP Trial On Machine:</label>
+                        <select id="cpTrialDropdown" name="cpTrialOnMachine" style="height:38px; min-width:0; width:100%; max-width:250px; font-size:1em; padding:8px;">
+                            <option value="no">No</option>
+                            <option value="yes">Yes</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>100% Self Pulling Material From Store:</label>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <input type="radio" name="selfPullingMaterial" id="self_yes" value="Yes"><label for="self_yes">Yes</label>
+                            <input type="radio" name="selfPullingMaterial" id="self_no" value="No"><label for="self_no">No</label>
+                        </div>
+                    </div>
+                    <div class="form-group"><label for="cpInterchangesDropdown">CP Interchanged:</label>
+                        <select id="cpInterchangesDropdown" name="cpInterchanged" style="height:38px; min-width:0; width:100%; max-width:250px; font-size:1em; padding:8px;">
+                            <option value="no">No</option>
+                            <option value="yes">Yes</option>
+                        </select>
+                    </div>
+                    <!-- CP Modal and CP Screen remain below -->
+                    <div class="form-group" style="grid-column: 1 / span 4;">
+                        <div id="cpModal" style="display:none;">
+                            <table><thead><tr><th>CP Layout</th><th>CP Customer Name</th></tr></thead>
+                                <tbody id="cpTableBody">
+                                    <tr><td><input type="text" name="cpLayout[]" /></td><td><input type="text" name="coCustomerName[]" /></td></tr>
+                                </tbody>
+                            </table>
+                            <button id="addRowButton">Add Row</button>
+                            <button id="saveButton">Save</button>
+                        </div>
+                    </div>
+                    <div class="form-group" style="grid-column: 1 / span 4;">
+                        <div id="cpScreen" style="display: none;">
+                            <label for="withCcnLayout">With CCN Layout:</label>
+                            <input type="text" id="withCcnLayout" name="with_ccn_layout"><br><br>
+                            <label for="withCcnCustomerName">With CCN Customer Name:</label>
+                            <input type="text" id="withCcnCustomerName" name="with_ccn_customer_name"><br><br>
+                            <button id="saveButton">Save</button>
+                        </div>
+                    </div>
+                    <!-- Move all textareas below and increase their width -->
+                    <div class="form-group" style="grid-column: 1 / span 4;"><label>Short Detail (MECH):</label><textarea name="shortDetailMech" style="width:99%; min-width:800px; height:60px;"></textarea></div>
+                    <div class="form-group" style="grid-column: 1 / span 4;"><label>Short Detail (ELECTRICAL):</label><textarea name="shortDetailElectrical" style="width:99%; min-width:800px; height:60px;"></textarea></div>
+                    <div class="form-group" style="grid-column: 1 / span 4;"><label>Short Detail (CP):</label><textarea name="shortDetailCp" style="width:99%; min-width:800px; height:60px;"></textarea></div>
+                    <div class="form-group" style="grid-column: 1 / span 4;"><label>Remarks:</label><textarea name="remarks" style="width:99%; min-width:800px; height:60px;"></textarea></div>
+                    <div class="form-group" style="grid-column: 1 / span 4;"><label>Delay Analysis:</label><textarea name="delayAnalysis" style="width:99%; min-width:800px; height:60px;"></textarea></div>
+                    <!-- Move upload field to just above the buttons -->
+                    <div class="form-group" style="grid-column: 1 / span 4;"><label for="image">Upload Machine Latest Image:</label>
+                        <input type="file" id="image" name="image" accept="image/*">
+                    </div>
+                    <div class="form-group" style="grid-column: 1 / span 4;">
+                        <button type="button" class="btn save" onclick="savePage('page3')">Save</button>
+                        <button type="button" class="btn discard" onclick="discardChanges()">Discard</button>
+                    </div>
+                </form>
+            </div>
+            <!-- Page 4 -->
+            <div id="page4" class="page" style="display:none;">
+                <h2>Assy Actuals</h2>
+                <form class="form-grid" style="grid-template-columns: repeat(4, 1fr);">
+                    <div class="form-group"><label>Actual Material Receipt Date:</label><input type="date" name="actualMaterialReceiptDate"></div>
+                    <div class="form-group"><label>Actual / Dynamic Manf Plan:</label><input type="date" name="actualDynamicManufacturingPlan"></div>
+                    <div class="form-group"><label>Actual / Dynamic Dispatch Plan:</label><input type="date" name="actualDynamicDispatchPlan"></div>
+                    <div class="form-group"><label>Actual Assy Start Date:</label><input type="date" name="actualAssyStartDate"></div>
+                    <div class="form-group"><label>Actual IFAT Date:</label><input type="date" name="actualIfatDate"></div>
+                    <div class="form-group"><label>Actual CP Date:</label><input type="date" name="actualCpDate"></div>
+                    <div class="form-group"><label>Actual CFAT Date:</label><input type="date" name="actualCfatDate"></div>
+                    <div class="form-group"><label>Compliance Closure Date:</label><input type="date" name="complianceClosureDate"></div>
+                    <div class="form-group"><label>MECH Non Issuance:</label><input type="text" name="mechNonIssuance"></div>
+                    <div class="form-group"><label>ELECT Non Issuance:</label><input type="number" name="electNonIssuance" style="height:38px; min-width:0; width:100%; max-width:250px; font-size:1em; padding:8px;"></div>
+                    <div class="form-group"><label>Handed To Dispatch Dept:</label><input type="date" name="handedToDispatchDept"></div>
+                    <div class="form-group" style="grid-column: 1 / span 4;">
+                        <button type="button" class="btn save" onclick="savePage('page4')">Save</button>
+                        <button type="button" class="btn discard" onclick="discardChanges()">Discard</button>
+                    </div>
+                </form>
+            </div>
+            <!-- Page 5 -->
+            <div id="page5" class="page" style="display:none;">
+                <h2>Review</h2>
+                <form class="form-grid" style="grid-template-columns: repeat(4, 1fr);">
+                    <div class="form-group" style="grid-column: 1 / span 4;"><label>Weekly Review:</label><textarea name="weeklyReview"></textarea></div>
+                    <div class="form-group"><label>Re-Scheduled IFAT Date(As per Weekly meeting):</label><input type="date" name="rescheduledIfatDate"></div>
+                    <div class="form-group"><label>Re-Scheduled CFAT Date (As per Weekly meeting):</label><input type="date" name="rescheduledCfatDate"></div>
+                    <div class="form-group" style="grid-column: 1 / span 4;">
+                        <button type="button" class="btn save" onclick="savePage('page5')">Save</button>
+                        <button type="button" class="btn discard" onclick="discardChanges()">Discard</button>
+                    </div>
+                </form>
+            </div>
+            <!-- Page 6 -->
+            <div id="page6" class="page" style="display:none;">
+                <h2>Dispatch Details</h2>
+                <form class="form-grid" style="grid-template-columns: repeat(4, 1fr);">
+                    <div class="form-group"><label>Dispatched Month:</label><input type="text" name="dispatched_month"></div>
+                    <div class="form-group"><label>Invoice Date:</label><input type="date" name="invoiceDate"></div>
+                    <div class="form-group" style="grid-column: 1 / span 4;">
+                        <button type="button" class="btn save" onclick="savePage('page6')">Save</button>
+                        <button type="button" class="btn discard" onclick="discardChanges()">Discard</button>
+                    </div>
+                </form>
+            </div>
+            <!-- Page 7 -->
+            <div id="page7" class="page" style="display:none;">
+                <h2>Formulated Column</h2>
+                <form class="form-grid" style="grid-template-columns: repeat(4, 1fr);">
+                    <div class="form-group"><label>IFAT Status:</label><input type="text" name="ifat_status"></div>
+                    <div class="form-group"><label>Manf Month:</label><input type="date" name="manf_month"></div>
+                    <div class="form-group"><label>Manf Year:</label><input type="text" name="manf_year"></div>
+                    <div class="form-group"><label>Comp %:</label><input type="text" name="comp_percent"></div>
+                    <div class="form-group"><label>Standard Tasks:</label><input type="text" name="standard_tasks"></div>
+                    <div class="form-group"><label>OTD:</label><input type="text" name="otd"></div>
+                    <div class="form-group"><label>Delay CFAT And Handed To Dispatch:</label><input type="date" name="delay_cfat_dispatch"></div>
+                    <div class="form-group"><label>Delay CFAT And Invoice:</label><input type="date" name="delay_cfat_invoice"></div>
+                    <div class="form-group"><label>Std Machine SLA:</label><input type="text" name="std_machine_sla"></div>
+                    <div class="form-group"><label>Actual Machine SLA:</label><input type="text" name="actual_machine_sla"></div>
+                    <div class="form-group"><label>New SLA:</label><input type="text" name="new_sla"></div>
+                    <div class="form-group"><label>Dispatch Year:</label><input type="text" name="dispatch_year"></div>
+                    <div class="form-group" style="grid-column: 1 / span 4;">
+                        <button type="button" class="btn save" onclick="savePage('page7')">Save</button>
+                        <button type="button" class="btn discard" onclick="discardChanges()">Discard</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="machine.js"></script>
+    <script>
+    // Set timestamp field to current date and time on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      var now = new Date();
+      var formatted = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + String(now.getDate()).padStart(2,'0') + ' ' + String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+      document.getElementById('timestamp').textContent = formatted;
+    });
+    // On page load, fetch data by CCN and fill form fields
+    document.addEventListener('DOMContentLoaded', async function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const ccn = urlParams.get('ccn');
+      if (!ccn) return;
+      try {
+        const res = await fetch(`/api/machine/by-ccn?ccn=${encodeURIComponent(ccn)}`);
+        if (res.ok) {
+          const data = await res.json();
+          // Helper to set value if exists
+          function setValue(selector, value) {
+            if (value !== undefined && value !== null) {
+              const el = document.querySelector(selector);
+              if (el) el.value = value;
+            }
+          }
+
+          function setAllValues(selector, value) {
+            if (value !== undefined && value !== null) {
+              document.querySelectorAll(selector).forEach(i => i.value = value);
+            }
+          }
+          // Prefer kickoff for overlapping fields, else PO
+          const kickoff = data.kickoff || {};
+          const po = data.po || {};
+          // Header fields
+          setAllValues('input[name="ccn"]', kickoff.ccn || po.ccn || '');
+          setAllValues('input[name="machineName"]', kickoff.machineName ||  '');
+          setAllValues('input[name="model"]', kickoff.machineModel || po.modelName || '');
+          setAllValues('input[name="customerName"]', kickoff.customerName || po.customerName || '');
+          // Page 1 fields
+          setValue('input[name="recordNo"]', po.recordNo || '');
+          setValue('input[name="poRefNo"]', po.poReferenceNumber || '');
+          setValue('input[name="poDate"]', po.poDate || '');
+          setValue('input[name="poDeliveryDate"]', kickoff.poDeliveryDate || po.poDeliveryDate || '');
+          setValue('input[name="poValueLacs"]', po.poValueLacs || '');
+          setValue('input[name="salesPerson"]', po.salesPerson || '');
+          setValue('input[name="orderType"]', kickoff.orderType || po.orderType || '');
+          // Address: prefer kickoff.address, else po.addressLine1
+          setValue('input[name="address"]', kickoff.address || po.addressLine1 || '');
+          // Page 2 fields
+          setValue('input[name="venue"]', kickoff.venue || '');
+          setValue('input[name="komNo"]', kickoff.komNo || '');
+          setValue('input[name="membersPresent"]', kickoff.membersPresent || '');
+          setValue('input[name="machineCpQty"]', kickoff.machineCpQty || '');
+          setValue('input[name="machineOptionalCpQty"]', kickoff.machine_optional_cp_qty || kickoff.machineOptionalCpQty || '');
+          setValue('input[name="po_receipt_date"]', kickoff.po_receipt_date || '');
+          setValue('input[name="oa_generation_date"]', kickoff.oa_generation_date || '');
+          setValue('input[name="kom_date"]', kickoff.kom_date || '');
+          setValue('input[name="advance_payment_receipt_date"]', kickoff.advance_payment_receipt_date || '');
+          setValue('input[name="balance_payment_receipt_date"]', kickoff.balance_payment_receipt_date || '');
+          setValue('input[name="cp_layout_approvals"]', kickoff.cp_layout_approvals || '');
+          setValue('input[name="machine_layout_approvals"]', kickoff.machine_layout_approvals || '');
+          setValue('input[name="room_layout_approvals"]', kickoff.room_layout_approvals || '');
+          setValue('input[name="loa_release"]', kickoff.loa_optional || '');
+          setValue('input[name="dq_release"]', kickoff.dq_release || '');
+          setValue('input[name="ppc_basic_date"]', kickoff.ppc_basic_date || '');
+          setValue('input[name="ppc_optional_date"]', kickoff.ppc_optional_date || '');
+          setValue('input[name="cp_design_release_date"]', kickoff.cp_design_release_date || '');
+          setValue('input[name="machine_manufacturing_basic"]', kickoff.machine_manufacturing_basic || '');
+          setValue('input[name="machine_manufacturing_customisation"]', kickoff.machine_manufacturing_customisation || '');
+          setValue('input[name="cp_manufacturing_date"]', kickoff.cp_manufacturing_date || '');
+          setValue('input[name="pmr_genration_submission_date"]', kickoff.pmr_genration_submission_date || '');
+          setValue('input[name="products_receipt_date"]', kickoff.products_receipt_date || '');
+          setValue('input[name="packaging_receipt_date"]', kickoff.packaging_receipt_date || '');
+          setValue('input[name="ifat_protocol_release"]', kickoff.ifat_protocol_release || '');
+          setValue('input[name="ifat_std_cp"]', kickoff.ifat_std_cp || '');
+          setValue('input[name="ifat_customer_cp"]', kickoff.ifat_customer_cp || '');
+          setValue('input[name="cfat"]', kickoff.cfat || '');
+          setValue('input[name="compliance"]', kickoff.compliance || '');
+          setValue('input[name="dispatch_clearance"]', kickoff.dispatch_clearance || '');
+          setValue('input[name="planned_dispatch_date"]', kickoff.planned_dispatch_date || '');
+          // Machine Category (now text input)
+          setValue('input[name="machineCategory"]', kickoff.machineCategory || po.machineCategory || '');
+          // New fields: Machine Basics, Machine Features, Additional Options
+          setValue('textarea[name="machineBasics"]', kickoff.machineBasics || '');
+          setValue('textarea[name="machineFeatures"]', kickoff.machineFeatures || '');
+          setValue('textarea[name="additionalOptions"]', kickoff.additionalOptions || '');
+          setValue('textarea[name="projectKickoffDetails"]', kickoff.projectKickoffDetails || '');
+
+          // ccn_status (radio)
+          if (kickoff.ccnStatus) {
+            const radios = document.querySelectorAll('input[name="ccn_status"]');
+            radios.forEach(r => { if (r.value.toLowerCase() === kickoff.ccnStatus.toLowerCase()) r.checked = true; });
+          }
+          // After setting model field, fetch totalProcessTask for that model
+          const model = document.querySelector('input[name="model"]').value;
+          if (model) {
+            try {
+              const resp = await fetch(`/api/machine-model/total-process-task?model=${encodeURIComponent(model)}`);
+              if (resp.ok) {
+                const totalProcessTask = await resp.json();
+                setValue('input[name="stdTaskOfMachine"]', totalProcessTask || '');
+              }
+            } catch (e) {}
+          }
+        }
+      } catch (e) {
+        
+      }
+    });
+    document.getElementById('cpTrialDropdown').addEventListener('change', function() {
+        var cpModal = document.getElementById('cpModal');
+        if (this.value === 'yes') {
+            cpModal.style.display = 'block';
+        } else {
+            cpModal.style.display = 'none';
+        }
+    });
+    function getFormData() {
+  const data = {};
+  // Collect all input, textarea, and select values from the entire page
+  document.querySelectorAll('input, textarea, select').forEach(el => {
+    if (el.type === 'radio') {
+      if (el.checked) data[el.name] = el.value;
+    } else if (el.type === 'checkbox') {
+      data[el.name] = el.checked;
+    } else if (el.type === 'file') {
+      // handle file separately if needed
+    } else {
+      data[el.name] = el.value;
+    }
+  });
+  // Add timestamp from span
+  data['timestamp'] = document.getElementById('timestamp').textContent;
+  return data;
+}
+async function savePage(pageId) {
+  const data = getFormData();
+  // For file upload, handle separately if needed
+  // For now, ignore image upload
+  const res = await fetch('/api/machine/submit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+  if (res.ok) {
+    alert('Saved successfully!');
+  } else {
+    alert('Save failed!');
+  }
+}
+    </script>
+</body>
+</html>
