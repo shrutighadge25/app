@@ -1,0 +1,12 @@
+target/
+.git
+.gitignore
+*.iml
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.log
+Dockerfile
+.dockerignore
+README.md
